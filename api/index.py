@@ -6,6 +6,7 @@ from flask_bcrypt import Bcrypt
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
 import datetime
+from flask_migrate import Migrate
 
 # --- App Initialization ---
 load_dotenv()
@@ -27,6 +28,7 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 # --- Extensions ---
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 bcrypt = Bcrypt(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
