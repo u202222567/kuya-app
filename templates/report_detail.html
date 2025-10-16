@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Report Details{% endblock %}
+{% block content %}
+    <h1>{{ report.problem_type }}</h1>
+    <p><strong>Location:</strong> {{ report.location }}</p>
+    <p><strong>Description:</strong> {{ report.description }}</p>
+    <p><img src="{{ url_for('uploaded_file', filename=report.photo_filename) }}" alt="Report Photo"></p>
+    <small>Reported by {{ report.author.dni }} on {{ report.timestamp.strftime('%Y-%m-%d') }}</small>
+
+    <div class="comment-section">
+        <h2>Comments ({{ report.comments|length }})</h2>
+        {% for comment in report.comments %}
+            <div class="comment">
+                <p>{{ comment.text }}</p>
+                <small>by {{ comment.commenter.dni }} on {{ comment.timestamp.strftime('%Y-%m-%d %H:%M') }}</small>
+            </div>
+        {% else %}
+            <p>No comments yet.</p>
+        {% endfor %}
+        <hr>
+        <h3>Add a Comment</h3>
+        <form method="POST">
+            <textarea name="comment_text" rows="3" required></textarea>
+            <button type="submit">Post Comment</button>
+        </form>
+    </div>
+    <p><a href="{{ url_for('home') }}">← Back to Home</a></p>
+{% endblock %}

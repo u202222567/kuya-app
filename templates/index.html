@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+    <div class="header-nav">
+        <span>Welcome, {{ current_user.dni }}</span>
+        <div>
+            <a href="{{ url_for('submit_report') }}" style="margin-right: 15px;">New Report</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </div>
+    <h1>Message Board</h1>
+    {% for report in reports %}
+        <div class="report-card">
+            <h3><a href="{{ url_for('report_detail', report_id=report.id) }}">{{ report.problem_type }}</a></h3>
+            <p><strong>Location:</strong> {{ report.location }}</p>
+            <small>Reported by {{ report.author.dni }} on {{ report.timestamp.strftime('%Y-%m-%d') }}</small>
+            <small> - {{ report.comments|length }} comments</small>
+        </div>
+    {% else %}
+        <p>No reports yet. Be the first to submit one!</p>
+    {% endfor %}
+{% endblock %}
